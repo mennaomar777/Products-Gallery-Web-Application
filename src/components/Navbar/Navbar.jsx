@@ -79,6 +79,7 @@ export default function Navbar() {
                 <NavLink
                   to="/"
                   className="block py-2 px-3 text-white rounded-sm md:bg-transparent hover:text-[#8e5f57] dark:hover:text-white md:p-0 transition dark:hover:bg-[#A68A82] m-0 text-lg"
+                  onClick={() => setMenuOpen(false)}
                 >
                   Home
                 </NavLink>
@@ -87,13 +88,17 @@ export default function Navbar() {
                 <NavLink
                   to="/"
                   className="block py-2 px-3 text-white rounded-sm bg-transparent hover:text-[#8e5f57] dark:hover:text-white md:p-0 transition m-0 text-lg"
+                  onClick={() => setMenuOpen(false)}
                 >
                   Products
                 </NavLink>
               </li>
               <li className="px-2">
                 <button
-                  onClick={toggleDarkMode}
+                  onClick={() => {
+                    toggleDarkMode();
+                    setMenuOpen(false);
+                  }}
                   className="block py-2 px-3 rounded-sm md:p-0 transition-colors text-white md:hover:text-[#8e5f57] cursor-pointer text-xl"
                 >
                   {isDark ? <FaSun /> : <FaMoon />}
