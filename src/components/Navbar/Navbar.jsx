@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { FaShoppingCart, FaSun, FaMoon } from "react-icons/fa";
 
 export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== "undefined") {
       return (
@@ -18,8 +19,10 @@ export default function Navbar() {
     if (typeof window !== "undefined") {
       document.body.classList.toggle("dark", isDark);
       localStorage.theme = isDark ? "dark" : "light";
+
       const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
       const handleChange = () => setIsDark(mediaQuery.matches);
+
       mediaQuery.addEventListener("change", handleChange);
       return () => mediaQuery.removeEventListener("change", handleChange);
     }
@@ -44,11 +47,9 @@ export default function Navbar() {
           </NavLink>
 
           <button
-            data-collapse-toggle="navbar-default"
+            onClick={() => setMenuOpen((prev) => !prev)}
             type="button"
             className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-[#a6786f] focus:outline-none focus:ring-2 focus:ring-white"
-            aria-controls="navbar-default"
-            aria-expanded="false"
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -67,7 +68,12 @@ export default function Navbar() {
             </svg>
           </button>
 
-          <div className="hidden w-full md:block md:w-auto" id="navbar-default">
+          <div
+            className={`${
+              menuOpen ? "block" : "hidden"
+            } w-full md:block md:w-auto`}
+            id="navbar-default"
+          >
             <ul className="font-medium flex flex-col items-center p-4 md:p-0 mt-4 border border-[#ddbfb4] rounded-lg bg-[#f1e5e1] md:flex-row md:mt-0 md:border-0 md:bg-transparent text-lg gap-4">
               <li className="px-2 py-1 m-0 dark:hover:bg-[#A68A82] rounded-lg">
                 <NavLink
@@ -85,7 +91,6 @@ export default function Navbar() {
                   Products
                 </NavLink>
               </li>
-
               <li className="px-2">
                 <button
                   onClick={toggleDarkMode}
